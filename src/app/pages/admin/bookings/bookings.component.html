@@ -1,0 +1,59 @@
+<div class="booking-bar">
+  <h1>Reservas</h1>
+</div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="hotel">
+      <th mat-header-cell *matHeaderCellDef>Hotel</th>
+      <td mat-cell *matCellDef="let element">{{ element.hotel.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="room">
+      <th mat-header-cell *matHeaderCellDef>Habitación</th>
+      <td mat-cell *matCellDef="let element">{{ element.room.number }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="checkin">
+      <th mat-header-cell *matHeaderCellDef>Ingreso</th>
+      <td mat-cell *matCellDef="let element">{{ element.checkin }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="checkout">
+      <th mat-header-cell *matHeaderCellDef>Salida</th>
+      <td mat-cell *matCellDef="let element">{{ element.checkout }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef class="header-total">Total</th>
+      <td mat-cell *matCellDef="let element" class="column-total">
+        {{ element.total | currency : "COP" : "symbol" : "4.2-2" : "es-CO" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="column-actions">
+          <button
+            mat-icon-button
+            aria-label="Ver detalle"
+            [routerLink]="['/admin/bookings/detail']"
+            [queryParams]="{ bookingId: element.id }"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

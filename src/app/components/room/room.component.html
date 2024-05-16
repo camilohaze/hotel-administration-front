@@ -1,0 +1,25 @@
+<mat-card>
+  <img
+    mat-card-image
+    src="http://via.placeholder.com/350x350"
+    [alt]="room.hotel.name"
+  />
+  <mat-card-content>
+    <h3>
+      <strong>
+        {{ room.hotel.name }}
+      </strong>
+    </h3>
+    <p>{{ room.roomType.description }}</p>
+    <strong>Precio noche:</strong>
+    {{ night | currency : "COP" : "symbol" : "4.2-2" : "es-CO" }}<br />
+    <strong>Precio total:</strong>
+    {{ subtotal | currency : "COP" : "symbol" : "4.2-2" : "es-CO" }}<br />
+    <strong>Precio total + IVA:</strong>
+    {{ total | currency : "COP" : "symbol" : "4.2-2" : "es-CO" }}
+  </mat-card-content>
+  <mat-divider class="my-2"></mat-divider>
+  <mat-card-actions align="end">
+    <button mat-flat-button color="primary" (click)="onBooking()">RESERVAR</button>
+  </mat-card-actions>
+</mat-card>

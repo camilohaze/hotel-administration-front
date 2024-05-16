@@ -1,0 +1,209 @@
+<div class="container">
+  <h1 mat-dialog-title>Realizar reserva</h1>
+  <div mat-dialog-content class="dialog-content">
+    <form [formGroup]="form" (ngSubmit)="onSumbit()" class="booking-form">
+      <div class="row">
+        <div class="col-12">
+          <h1>Contacto de emergencia</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="booking-fullName">
+            <mat-label>Nombres completos</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="fullName"
+              placeholder="Nombres completos"
+            />
+            @if (form.controls['fullName'].hasError('required')) {
+            <mat-error>El nombre es <strong>requerido</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="booking-phone">
+            <mat-label>Teléfono de contacto</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="phone"
+              placeholder="Teléfono de contacto"
+            />
+            @if (form.controls['phone'].hasError('required')) {
+            <mat-error>El teléfono es <strong>requerido</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h1>Pasajeros</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ng-container formArrayName="guests">
+            <mat-accordion class="guests-container">
+              @for (guest of guests.controls; track guest; let i = $index) {
+              <ng-container class="guest-form" [formGroupName]="i">
+                <mat-expansion-panel [expanded]="i === 0" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title> Pasajero {{ i + 1 }} </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <mat-form-field appearance="outline" class="guest-firtName">
+                        <mat-label>Nombres</mat-label>
+                        <input
+                          matInput
+                          formControlName="firstName"
+                          placeholder="Nombres"
+                        />
+                        @if(guests.controls[i].get('firstName')?.hasError('required'))
+                        {
+                        <mat-error>
+                          Los nombres son <strong>requeridos</strong>
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <mat-form-field appearance="outline" class="guest-lastName">
+                        <mat-label>Apellidos</mat-label>
+                        <input
+                          matInput
+                          formControlName="lastName"
+                          placeholder="Apellidos"
+                        />
+                        @if(guests.controls[i].get('lastName')?.hasError('required'))
+                        {
+                        <mat-error>
+                          Los apellidos son <strong>requeridos</strong>
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <mat-form-field
+                        appearance="outline"
+                        class="guest-documentType"
+                      >
+                        <mat-label>Tipo de documento</mat-label>
+                        <mat-select formControlName="documentTypeId">
+                          <mat-option [value]="0"></mat-option>
+                          @for (documentType of documentTypes; track
+                          documentType.id) {
+                          <mat-option [value]="documentType.id">
+                            {{ documentType.name }}
+                          </mat-option>
+                          }
+                        </mat-select>
+                        @if(guests.controls[i].get('documentTypeId')?.hasError('required'))
+                        {
+                        <mat-error>
+                          El tipo de documento es <strong>requerido</strong>
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <mat-form-field appearance="outline" class="guest-document">
+                        <mat-label>Documento</mat-label>
+                        <input
+                          matInput
+                          formControlName="document"
+                          placeholder="Documento"
+                        />
+                        @if
+                        (guests.controls[i].get('document')?.hasError('required'))
+                        {
+                        <mat-error>
+                          El documento es <strong>requerido</strong>
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <mat-form-field appearance="outline" class="guest-gender">
+                        <mat-label>Genero</mat-label>
+                        <mat-select formControlName="genderId">
+                          <mat-option [value]="0"></mat-option>
+                          @for (gender of genders; track gender.id) {
+                          <mat-option [value]="gender.id">
+                            {{ gender.name }}
+                          </mat-option>
+                          }
+                        </mat-select>
+                        @if(guests.controls[i].get('genderId')?.hasError('required'))
+                        {
+                        <mat-error>
+                          El género es <strong>requerido</strong>
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <mat-form-field appearance="outline" class="guest-email">
+                        <mat-label>Correo electrónico</mat-label>
+                        <input
+                          type="email"
+                          matInput
+                          formControlName="email"
+                          placeholder="Correo electrónico"
+                        />
+                        @if (guests.controls[i].get('email')?.hasError('email') &&
+                        !guests.controls[i].get('email')?.hasError('required')) {
+                        <mat-error>
+                          Por favor ingrese una dirección de correo valida
+                        </mat-error>
+                        }
+                        @if (guests.controls[i].get('email')?.hasError('required')) {
+                        <mat-error>
+                          El correo electrónico es <strong>requerido</strong>
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <mat-form-field appearance="outline" class="guest-phone">
+                        <mat-label>Teléfono</mat-label>
+                        <input
+                          matInput
+                          formControlName="phone"
+                          placeholder="Teléfono"
+                        />
+                        @if(guests.controls[i].get('phone')?.hasError('required'))
+                        {
+                        <mat-error>
+                          El Teléfono es <strong>requerido</strong>
+                        </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </ng-container>
+              }
+            </mat-accordion>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-actions">
+            <button type="button" mat-button (click)="onGoBack()">Cancelar</button>
+            <button type="submit" mat-flat-button color="primary">Reservar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+.hotel-form {}
+
+.hotel-name,
+.hotel-address,
+.hotel-phone,
+.hotel-email,
+.room-number,
+.room-type {
+  width: 100%;
+}
+
+.room-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 1rem;
+
+  button:first-child {
+    margin-right: 1rem;
+  }
+}

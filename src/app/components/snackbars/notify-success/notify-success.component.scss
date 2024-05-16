@@ -1,0 +1,23 @@
+
+.notice-container {
+  position: absolute;
+  background-color: rgb(62 189 97 / 80%);
+  border-radius: 5px;
+  bottom: 0px;
+
+  .notice-message {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    h2 {
+      min-width: 290px;
+      margin: 0 5px;
+      color: rgba(0, 0, 0, 0.67);
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}

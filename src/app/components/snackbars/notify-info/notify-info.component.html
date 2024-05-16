@@ -1,0 +1,9 @@
+<div class="notice-container">
+  <div class="notice-message" matSnackBarLabel>
+    <mat-icon class="material-icons-outlined">info</mat-icon>
+    <h2>{{ message }}</h2>
+    <div class="snackbar-actions" matSnackBarActions>
+      <button mat-raised-button matSnackBarAction (click)="matSnackBarRef.dismissWithAction()">OK</button>
+    </div>
+  </div>
+</div>

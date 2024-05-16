@@ -1,0 +1,86 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSumbit()">
+      <div class="row">
+        <div class="col-12">
+          <h1>Asistencias de viaje</h1>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <mat-form-field appearance="outline" class="city-form-field">
+            <mat-label>Destino</mat-label>
+            <mat-icon matPrefix>location_city</mat-icon>
+            <mat-select formControlName="cityId">
+              @for (city of cities; track city.id) {
+              <mat-option [value]="city.id">
+                {{ city.name }}
+              </mat-option>
+              }
+            </mat-select>
+            @if (form.controls['cityId'].hasError('required')) {
+            <mat-error> El destino es <strong>requerido</strong> </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline" class="dates-form-field">
+            <mat-label>Fechas</mat-label>
+            <mat-date-range-input [rangePicker]="bookingPicker">
+              <input
+                matStartDate
+                placeholder="Ingreso"
+                formControlName="checkin"
+                class="w-100"
+              />
+              <input
+                matEndDate
+                placeholder="Salida"
+                formControlName="checkout"
+                class="w-100"
+              />
+            </mat-date-range-input>
+            <mat-icon matPrefix>calendar_month</mat-icon>
+            <mat-datepicker-toggle matIconSuffix [for]="bookingPicker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-date-range-picker #bookingPicker></mat-date-range-picker>
+            @if (form.controls['cityId'].hasError('required')) {
+            <mat-error> La fechas son <strong>requeridas</strong> </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+          <mat-form-field appearance="outline" class="passengers-form-field">
+            <mat-label>Pasajeros</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input
+              matInput
+              type="number"
+              max="8"
+              formControlName="passengers"
+              (keypress)="onlyNumbers($event)"
+            />
+            @if (form.controls['passengers'].hasError('max') &&
+            !form.controls['passengers'].hasError('required')) {
+            <mat-error>La cantidad máxima de pasajeros es 8</mat-error>
+            }
+            @if (form.controls['passengers'].hasError('required')) {
+            <mat-error>
+              La cantidad de pasajeros es <strong>requerida</strong>
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md">
+          <div class="search-form-button">
+            <button type="submit" mat-raised-button color="primary">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

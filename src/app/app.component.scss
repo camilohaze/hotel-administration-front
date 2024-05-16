@@ -1,0 +1,20 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.drawer-container {
+  height: calc(100vh - 65px);
+}
+
+.drawer-sidenav {
+  min-width: 300px;
+}
+
+.active-list-item {
+  background-color: gainsboro;
+}
+
+.footer-container {
+  text-align: center;
+  margin-top: 3rem;
+}

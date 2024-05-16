@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Session Timeout</h2>
+<mat-dialog-content class="mat-typography">
+  <p>
+    La política de nuestra organización exige la cancelación automática de la
+    sesión después de un período de inactividad en la aplicación.
+  </p>
+  <span class="time">{{ time | date : "mm:ss" }}</span>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close="cancel">Cancelar</button>
+  <button mat-button mat-dialog-close="logout" cdkFocusInitial>
+    Cerrar sesión
+  </button>
+</mat-dialog-actions>

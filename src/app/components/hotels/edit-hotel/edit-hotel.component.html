@@ -1,0 +1,183 @@
+<form [formGroup]="form" (ngSubmit)="onSumbit()" class="hotel-form">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline" class="hotel-name">
+        <mat-label>Nombre</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          placeholder="Nombre"
+        />
+        @if (form.controls['name'].hasError('required')) {
+        <mat-error>El nombre es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline" class="hotel-address">
+        <mat-label>Dirección</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="address"
+          placeholder="Dirección"
+        />
+        @if (form.controls['address'].hasError('required')) {
+        <mat-error>La dirección es <strong>requerida</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline" class="hotel-phone">
+        <mat-label>Teléfono</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="phone"
+          placeholder="Teléfono"
+          (keypress)="onlyNumbers($event)"
+        />
+        @if (form.controls['phone'].hasError('required')) {
+        <mat-error>El teléfono es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline" class="hotel-email">
+        <mat-label>Correo electrónico</mat-label>
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="Correo electrónico"
+        />
+        @if (form.controls['email'].hasError('email') &&
+        !form.controls['email'].hasError('required')) {
+        <mat-error>Por favor ingrese una dirección de correo valida</mat-error>
+        } @if (form.controls['email'].hasError('required')) {
+        <mat-error
+          >El correo electrónico es <strong>requerido</strong></mat-error
+        >
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline" class="room-type">
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="cityId">
+          @for (city of cities; track city.id) {
+          <mat-option [value]="city.id">
+            {{ city.name }}
+          </mat-option>
+          }
+        </mat-select>
+        @if (form.controls['cityId'].hasError('required')) {
+        <mat-error>
+          La ciudad es <strong>requerida</strong>
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h3>
+        <strong>Habitaciones</strong>
+      </h3>
+    </div>
+    <div class="col-1">
+      <button type="button" mat-mini-fab (click)="addRoom()">
+        <mat-icon class="add-course-btn">add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <ng-container formArrayName="rooms">
+        @for (room of rooms.controls; track room; let i = $index) {
+        <ng-container class="room-form" [formGroupName]="i">
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="room-number">
+                <mat-label>Número de habitación</mat-label>
+                <input
+                  matInput
+                  formControlName="number"
+                  placeholder="Número de habitación"
+                  (keypress)="onlyNumbers($event)"
+                />
+                @if (rooms.controls[i].get('room')?.hasError('required')) {
+                <mat-error>
+                  El número de habitación es <strong>requerido</strong>
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md">
+              <mat-form-field appearance="outline" class="room-type">
+                <mat-label>Tipo de habitación</mat-label>
+                <mat-select formControlName="roomTypeId">
+                  @for (roomType of roomTypes; track roomType.id) {
+                  <mat-option [value]="roomType.id">
+                    {{ roomType.type }}
+                  </mat-option>
+                  }
+                </mat-select>
+                <mat-hint>
+                  Detalle: @if (getDetail(i)) {
+                  <strong>capacidad máxima</strong>
+                  {{ getDetail(i)?.maximum }} personas, <strong>precio</strong>
+                  {{
+                    getDetail(i)?.price
+                      | currency : "COP" : "symbol" : "4.2-2" : "es-CO"
+                  }}, <strong>IVA</strong>
+                  {{ (getDetail(i)?.tax || 0) / 100 | percent : "2.1-1" }}
+                  }
+                </mat-hint>
+                @if(rooms.controls[i].get('roomTypeId')?.hasError('required')) {
+                <mat-error>
+                  El tipo de habitación es <strong>requerido</strong>
+                </mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-2">
+              <div class="room-status">
+                <mat-slide-toggle #slide formControlName="status">
+                  {{ slide.checked ? "Habilitada" : "Deshabilitada" }}
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col-12 col-md-1">
+              <button
+                type="button"
+                mat-mini-fab
+                [disabled]="disabledDeleteRoom(i)"
+                (click)="deleteRoom(i)"
+              >
+                <mat-icon class="add-course-btn">delete_forever</mat-icon>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        }
+      </ng-container>
+    </div>
+  </div>
+  <mat-divider class="mt-5"></mat-divider>
+  <div class="form-actions">
+    <button type="button" mat-button (click)="onGoBack()">Cancelar</button>
+    <button type="submit" mat-flat-button color="primary">Guardar</button>
+  </div>
+</form>

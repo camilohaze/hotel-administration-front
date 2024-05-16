@@ -1,0 +1,35 @@
+:host {
+  display: flow;
+}
+
+.dialog-content {
+  display: inline;
+}
+
+.booking-fullName,
+.booking-phone,
+.guest-firtName,
+.guest-lastName,
+.guest-documentType,
+.guest-document,
+.guest-gender,
+.guest-email,
+.guest-phone {
+  width: 100%;
+}
+
+.guests-container .mat-expansion-panel-header-description {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 1rem;
+
+  button:first-child {
+    margin-right: 1rem;
+  }
+}

@@ -1,0 +1,17 @@
+.booking-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.header-total,
+.column-total {
+  text-align: right;
+}
+
+.column-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

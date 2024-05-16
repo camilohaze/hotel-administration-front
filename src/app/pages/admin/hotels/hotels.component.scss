@@ -1,0 +1,23 @@
+.hotel-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.header-status {
+  text-align: center;
+}
+
+.column-status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.column-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
