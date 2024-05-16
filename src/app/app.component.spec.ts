@@ -1,10 +1,46 @@
 import { TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
+import { Idle, IdleExpiry } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
+
 import { AppComponent } from './app.component';
+import { EventBusService, SessionService } from './services';
+
+export class MockExpiry extends IdleExpiry {
+  public lastDate!: Date;
+  public mockNow!: Date;
+
+  last(value?: Date): Date {
+    if (value !== void 0) {
+      this.lastDate = value;
+    }
+
+    return this.lastDate;
+  }
+
+  override now(): Date {
+    return this.mockNow || new Date();
+  }
+}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [BrowserAnimationsModule, AppComponent],
+      providers: [
+        EventBusService,
+        SessionService,
+        Idle,
+        Keepalive,
+        { provide: IdleExpiry, useClass: MockExpiry },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { params: { hotelId: '1' } },
+          },
+        },
+      ],
     }).compileComponents();
   });
 
@@ -12,18 +48,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'hotel-administration' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('hotel-administration');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, hotel-administration');
   });
 });

@@ -11,7 +11,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, finalize, switchMap } from 'rxjs/operators';
 
 import { AuthService, EventBusService, SessionService } from '@services';
-import { EventData } from 'src/app/class';
+import { EventData } from '@class';
 
 
 export class CustomHttpInterceptor implements HttpInterceptor {
