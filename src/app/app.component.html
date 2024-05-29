@@ -22,6 +22,36 @@
       </div>
       <mat-list-item
         role="listitem"
+        [routerLink]="['/admin/cities']"
+        routerLinkActive="active-list-item"
+        (click)="navigate('/admin/cities', drawer)"
+      >
+        <mat-icon matListItemIcon>location_city</mat-icon>
+        <div matListItemTitle>Ciudades</div>
+      </mat-list-item>
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/admin/document-types']"
+        routerLinkActive="active-list-item"
+        (click)="navigate('/admin/document-types', drawer)"
+      >
+        <mat-icon matListItemIcon>perm_identity</mat-icon>
+        <div matListItemTitle>Tipos de documentos</div>
+      </mat-list-item>
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/admin/genders']"
+        routerLinkActive="active-list-item"
+        (click)="navigate('/admin/genders', drawer)"
+      >
+        <mat-icon matListItemIcon>male</mat-icon>
+        <div matListItemTitle>Géneros</div>
+      </mat-list-item>
+
+      <mat-divider class="my-2"></mat-divider>
+
+      <mat-list-item
+        role="listitem"
         [routerLink]="['/admin/hotels']"
         routerLinkActive="active-list-item"
         (click)="navigate('/admin/hotels', drawer)"
@@ -37,6 +67,15 @@
       >
         <mat-icon matListItemIcon>book_online</mat-icon>
         <div matListItemTitle>Reservas</div>
+      </mat-list-item>
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/admin/room-types']"
+        routerLinkActive="active-list-item"
+        (click)="navigate('/admin/room-types', drawer)"
+      >
+        <mat-icon matListItemIcon>room_preferences</mat-icon>
+        <div matListItemTitle>Tipos de habitaciones</div>
       </mat-list-item>
       }
     </mat-list>

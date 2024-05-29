@@ -1,0 +1,17 @@
+.document__type-form {
+  .document__type-abbreviation,
+  .document__type-name {
+    width: 100%;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  
+    button:first-child {
+      margin-right: 1rem;
+    }
+  }
+}

@@ -86,7 +86,7 @@ export class HotelsComponent implements OnInit, OnDestroy {
 
     hotel.status = !hotel.status;
 
-    this.hotelService.update(hotel).subscribe({
+    this.hotelService.toggleStatus(hotel).subscribe({
       next: (hotelUpdated) => {
         this.notificationService.open(NotifySuccessComponent, {
           duration: 3000,

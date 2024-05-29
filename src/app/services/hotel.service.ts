@@ -24,6 +24,10 @@ export class HotelService {
     return this.http.put<Hotel>('hotels', hotel);
   }
 
+  public toggleStatus(hotel: Hotel): Observable<Hotel> {
+    return this.http.put<Hotel>('hotels/toggleStatus', hotel);
+  }
+
   public remove(hotel: Hotel): Observable<Hotel> {
     return this.http.delete<Hotel>('hotels', { body: hotel });
   }

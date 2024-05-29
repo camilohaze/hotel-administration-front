@@ -14,6 +14,26 @@ const routes: Routes = [
         canActivate: [SessionGuard],
       },
       {
+        path: 'cities',
+        loadChildren: () =>
+          import('./cities/cities.module').then((p) => p.CitiesModule),
+        canActivate: [SessionGuard],
+      },
+      {
+        path: 'document-types',
+        loadChildren: () =>
+          import('./document-types/document-types.module').then(
+            (p) => p.DocumentTypesModule
+          ),
+        canActivate: [SessionGuard],
+      },
+      {
+        path: 'genders',
+        loadChildren: () =>
+          import('./genders/genders.module').then((p) => p.GendersModule),
+        canActivate: [SessionGuard],
+      },
+      {
         path: 'hotels',
         loadChildren: () =>
           import('./hotels/hotels.module').then((p) => p.HotelsModule),
@@ -23,6 +43,12 @@ const routes: Routes = [
         path: 'bookings',
         loadChildren: () =>
           import('./bookings/bookings.module').then((p) => p.BookingsModule),
+        canActivate: [SessionGuard],
+      },
+      {
+        path: 'room-types',
+        loadChildren: () =>
+          import('./room-types/room-types.module').then((p) => p.RoomTypesModule),
         canActivate: [SessionGuard],
       },
     ],

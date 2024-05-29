@@ -11,6 +11,33 @@ export class QueryParamsGuard {
     const url = parent && parent.routeConfig && parent.routeConfig.path;
 
     switch (url) {
+      case 'cities':
+        if (!queryParams.hasOwnProperty('cityId')) {
+          this.location.back();
+
+          return false;
+        }
+
+        return true;
+
+      case 'document-types':
+        if (!queryParams.hasOwnProperty('documentTypeId')) {
+          this.location.back();
+
+          return false;
+        }
+
+        return true;
+
+      case 'genders':
+        if (!queryParams.hasOwnProperty('genderId')) {
+          this.location.back();
+
+          return false;
+        }
+
+        return true;
+
       case 'hotels':
         if (!queryParams.hasOwnProperty('hotelId')) {
           this.location.back();
@@ -29,9 +56,17 @@ export class QueryParamsGuard {
 
         return true;
 
+      case 'room-types':
+        if (!queryParams.hasOwnProperty('roomTypeId')) {
+          this.location.back();
+
+          return false;
+        }
+
+        return true;
+
       default:
         return true;
     }
-
   }
 }

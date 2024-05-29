@@ -30,7 +30,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     request = request.clone({
-      url: 'http://34.86.9.127:3000/'.concat(request.url),
+      url: 'http://localhost:3000/'.concat(request.url),
       withCredentials: true,
     });
 

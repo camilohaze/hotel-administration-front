@@ -1,0 +1,21 @@
+.room__type-form {
+  .room__type-type,
+  .room__type-description,
+  .room__type-minimum,
+  .room__type-maximum,
+  .room__type-price,
+  .room__type-tax {
+    width: 100%;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  
+    button:first-child {
+      margin-right: 1rem;
+    }
+  }
+}

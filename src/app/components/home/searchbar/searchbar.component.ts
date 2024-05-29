@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import 'moment/locale/es';
 
 import { EventData } from '@class';
@@ -71,6 +71,7 @@ moment.localeData('es');
 export class SearchbarComponent {
   @Input() public cities: City[] = [];
 
+  public today: Moment = moment();
   public form = new FormGroup({
     cityId: new FormControl(null, [Validators.required]),
     checkin: new FormControl(null, [Validators.required]),

@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="onSumbit()" class="document__type-form">
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <mat-form-field appearance="outline" class="document__type-abbreviation">
+        <mat-label>Abreviatura</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="abbreviation"
+          placeholder="Abreviatura"
+        />
+        @if (form.controls['abbreviation'].hasError('required')) {
+        <mat-error>La abreviatura es <strong>requerida</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-9">
+      <mat-form-field appearance="outline" class="document__type-name">
+        <mat-label>Nombre</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          placeholder="Nombre"
+        />
+        @if (form.controls['name'].hasError('required')) {
+        <mat-error>El nombre es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-divider class="mt-5"></mat-divider>
+
+  <div class="form-actions">
+    <button type="button" mat-button (click)="onGoBack()">Cancelar</button>
+    <button type="submit" mat-flat-button color="primary">Guardar</button>
+  </div>
+</form>

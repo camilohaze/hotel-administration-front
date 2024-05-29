@@ -1,0 +1,103 @@
+<form [formGroup]="form" (ngSubmit)="onSumbit()" class="room__type-form">
+  <div class="row gy-3">
+    <div class="col-12">
+      <mat-form-field appearance="outline" class="room__type-type">
+        <mat-label>Tipo</mat-label>
+        <input type="text" matInput formControlName="type" placeholder="Tipo" />
+        @if (form.controls['type'].hasError('required')) {
+        <mat-error>El tipo es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <mat-form-field appearance="outline" class="room__type-minimum">
+        <mat-label>Mínimo de personas</mat-label>
+        <input
+          type="text"
+          matInput
+          maxlength="1"
+          formControlName="minimum"
+          placeholder="Mínimo de personas"
+          (keypress)="onlyNumbers($event)"
+        />
+        @if (form.controls['minimum'].hasError('required')) {
+        <mat-error>El mínimo de personas es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <mat-form-field appearance="outline" class="room__type-maximum">
+        <mat-label>Máximo de personas</mat-label>
+        <input
+          type="text"
+          matInput
+          maxlength="1"
+          formControlName="maximum"
+          placeholder="Máximo de personas"
+          (keypress)="onlyNumbers($event)"
+        />
+        @if (form.controls['maximum'].hasError('required')) {
+        <mat-error>El máximo de personas es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <mat-form-field appearance="outline" class="room__type-price">
+        <mat-label>Precio</mat-label>
+        <input
+          type="text"
+          matInput
+          maxlength="11"
+          formControlName="price"
+          placeholder="Precio"
+          (keyup)="onlyDecimals($event, 'price')"
+        />
+        @if (form.controls['price'].hasError('required')) {
+        <mat-error>El precio es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <mat-form-field appearance="outline" class="room__type-tax">
+        <mat-label>Impuesto</mat-label>
+        <input
+          type="text"
+          matInput
+          maxlength="5"
+          formControlName="tax"
+          placeholder="Impuesto"
+          (keyup)="onlyDecimals($event, 'tax')"
+        />
+        @if (form.controls['tax'].hasError('required')) {
+        <mat-error>El impuesto es <strong>requerido</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12">
+      <mat-form-field appearance="outline" class="room__type-description">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          rows="5"
+          formControlName="description"
+          placeholder="Descripción"
+        ></textarea>
+        @if (form.controls['description'].hasError('required')) {
+        <mat-error>La descripción es <strong>requerida</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-divider class="mt-5"></mat-divider>
+
+  <div class="form-actions">
+    <button type="button" mat-button (click)="onGoBack()">Cancelar</button>
+    <button type="submit" mat-flat-button color="primary">Guardar</button>
+  </div>
+</form>

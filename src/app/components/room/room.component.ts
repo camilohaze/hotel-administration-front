@@ -31,6 +31,9 @@ export class RoomComponent {
   @Input() checkout!: Moment;
   @Input() passengers!: number;
 
+  private imgPreffix: number = Math.random() * 100;
+  public image: string = `https://picsum.photos/350/250?v=${this.imgPreffix}_${Date.now()}`;
+
   get iva(): number {
     return this.room.roomType.tax / 100;
   }
