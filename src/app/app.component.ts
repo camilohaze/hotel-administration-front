@@ -1,4 +1,4 @@
-import { Component, NgZone, inject } from '@angular/core';
+import { Component, NgZone, ViewChild, inject } from '@angular/core';
 import {
   Router,
   RouterOutlet,
@@ -44,6 +44,8 @@ import { SessionTimeoutComponent } from '@components';
   providers: [AuthService],
 })
 export class AppComponent {
+  @ViewChild('drawer') drawer!: MatDrawer;
+
   set $subscriptions($subscription: Subscription[]) {
     this.$subscription = $subscription;
   }
@@ -83,31 +85,37 @@ export class AppComponent {
 
     this.$subscriptions.push(
       this.eventBusService.on('sessionTimeout', (time: number) => {
-        if (time === 1000) {
-          const modal = this.modalService.openDialogs.find(
-            (p) => p.id === 'timeout'
-          );
+        this.ngZone.run(() => {
+          if (time === 1000) {
+            const modal = this.modalService.openDialogs.find(
+              (p) => p.id === 'timeout'
+            );
 
-          if (!!modal) {
-            modal.close('timeout');
+            if (!!modal) {
+              modal.close('timeout');
+            }
           }
-        }
 
-        this.sessionTimeout(time);
+          this.sessionTimeout(time);
+        });
       })
     );
 
     this.$subscriptions.push(
       this.eventBusService.on('sessionStart', () => {
-        this.sessionStart();
+        this.ngZone.run(() => this.sessionStart());
       })
     );
 
     this.$subscriptions.push(
       this.eventBusService.on('sessionDestroy', () => {
-        this.sessionDestroy();
+        this.ngZone.run(() => this.sessionDestroy());
       })
     );
+  }
+
+  public ngOnDestroy(): void {
+    this.$subscriptions.filter((p) => !p.closed).filter((p) => p.unsubscribe());
   }
 
   public logout(): void {
@@ -159,11 +167,12 @@ export class AppComponent {
     this.sessionService.stop();
     this.sessionService.clear();
     this.modalService.closeAll();
+    this.drawer.close();
     this.router.navigate(['/admin/login']);
   }
 
-  public navigate(path: string, drawer: MatDrawer): void {
-    this.router.navigate([path])
-    drawer.toggle();
+  public navigate(path: string): void {
+    this.router.navigate([path]);
+    this.drawer.toggle();
   }
 }

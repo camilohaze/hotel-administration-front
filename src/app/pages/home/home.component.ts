@@ -123,6 +123,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  public ngOnDestroy(): void {
+    this.$subscriptions.filter((p) => !p.closed).filter((p) => p.unsubscribe());
+  }
+
   public onSearchRooms(options: SearchRoomsEvent): void {
     const { checkin, checkout, passengers } = options;
     const $checkin = moment(checkin);

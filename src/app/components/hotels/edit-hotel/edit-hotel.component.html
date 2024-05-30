@@ -81,9 +81,7 @@
           }
         </mat-select>
         @if (form.controls['cityId'].hasError('required')) {
-        <mat-error>
-          La ciudad es <strong>requerida</strong>
-        </mat-error>
+        <mat-error> La ciudad es <strong>requerida</strong> </mat-error>
         }
       </mat-form-field>
     </div>
@@ -160,12 +158,7 @@
               </div>
             </div>
             <div class="col-12 col-md-1">
-              <button
-                type="button"
-                mat-mini-fab
-                [disabled]="disabledDeleteRoom(i)"
-                (click)="deleteRoom(i)"
-              >
+              <button type="button" mat-mini-fab (click)="deleteRoom(i)">
                 <mat-icon class="add-course-btn">delete_forever</mat-icon>
               </button>
             </div>

@@ -56,6 +56,10 @@ export class NewGenderComponent implements OnInit {
     // code here!
   }
 
+  public ngOnDestroy(): void {
+    this.$subscriptions.filter((p) => !p.closed).filter((p) => p.unsubscribe());
+  }
+
   public onSumbit(gender: Gender): void {
     this.modalService.open(SpinnerComponent, {
       id: 'spinner',

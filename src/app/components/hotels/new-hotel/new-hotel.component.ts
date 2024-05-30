@@ -23,8 +23,9 @@ import {
   FormArray,
 } from '@angular/forms';
 
+import { ConfirmComponent } from '@components';
 import { EventData } from '@class';
-import { EventBusService } from '@services';
+import { ModalService, EventBusService } from '@services';
 import { City, RoomType } from '@interfaces';
 
 registerLocaleData(localeCO);
@@ -77,6 +78,7 @@ export class NewHotelComponent {
     ]),
   });
 
+  private modalService: ModalService = inject(ModalService);
   private eventBusService: EventBusService = inject(EventBusService);
 
   constructor(private formBuilder: FormBuilder, private location: Location) {}
@@ -95,7 +97,18 @@ export class NewHotelComponent {
   }
 
   public deleteRoom(index: number): void {
-    this.rooms.removeAt(index);
+    this.modalService.open(
+      ConfirmComponent,
+      {
+        id: 'delete-room',
+        data: index,
+      },
+      (confirm: boolean) => {
+        if (confirm) {
+          this.rooms.removeAt(index);
+        }
+      },
+    );
   }
 
   public getDetail(index: number): RoomType | undefined {

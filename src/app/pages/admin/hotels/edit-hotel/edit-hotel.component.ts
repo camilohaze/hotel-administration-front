@@ -11,6 +11,7 @@ import {
   HotelService,
   ModalService,
   NotificationService,
+  RoomService,
   RoomTypeService,
 } from '@services';
 import {
@@ -26,7 +27,7 @@ import {
   styleUrl: './edit-hotel.component.scss',
   standalone: true,
   imports: [ComponentsModule, MatCardModule, MatDividerModule],
-  providers: [HotelService, RoomTypeService, CityService],
+  providers: [HotelService, RoomService, RoomTypeService, CityService],
 })
 export class EditHotelComponent implements OnInit {
   set $subscriptions($subscription: Subscription[]) {
@@ -47,18 +48,16 @@ export class EditHotelComponent implements OnInit {
     inject(NotificationService);
   private eventBusService: EventBusService = inject(EventBusService);
   private hotelService: HotelService = inject(HotelService);
+  private roomService: RoomService = inject(RoomService);
   private roomTypeService: RoomTypeService = inject(RoomTypeService);
   private cityService: CityService = inject(CityService);
 
   private $subscription: Subscription[] = [];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     this.$subscriptions.push(
       this.eventBusService.on('edit-hotel', (hotel: Hotel) => {
-        this.onSumbit(hotel);
+        this.ngZone.run(() => this.onSumbit(hotel));
       })
     );
   }
@@ -88,6 +87,10 @@ export class EditHotelComponent implements OnInit {
     });
   }
 
+  public ngOnDestroy(): void {
+    this.$subscriptions.filter((p) => !p.closed).filter((p) => p.unsubscribe());
+  }
+
   public onSumbit(hotel: Hotel): void {
     this.modalService.open(SpinnerComponent, {
       id: 'spinner',
@@ -95,6 +98,18 @@ export class EditHotelComponent implements OnInit {
     });
 
     const { id } = hotel;
+
+    let rooms = this.hotel.rooms.filter(
+      (room) =>
+        hotel.rooms
+          .filter((p) => !!p.id)
+          .map((p) => p.id)
+          .indexOf(room.id) < 0
+    );
+
+    if (!!rooms.length) {
+      this.roomService.remove(rooms).subscribe();
+    }
 
     hotel.rooms = [...hotel.rooms].map((room) => {
       room.hotelId = id;

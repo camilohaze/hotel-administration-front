@@ -80,6 +80,10 @@ export class NewHotelComponent implements OnInit {
     });
   }
 
+  public ngOnDestroy(): void {
+    this.$subscriptions.filter((p) => !p.closed).filter((p) => p.unsubscribe());
+  }
+
   public onSumbit(hotel: Hotel): void {
     this.modalService.open(SpinnerComponent, {
       id: 'spinner',

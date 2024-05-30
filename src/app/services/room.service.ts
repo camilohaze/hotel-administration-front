@@ -20,15 +20,15 @@ export class RoomService {
     return this.http.post<Room[]>('rooms/filter', options);
   }
 
-  public store(hotel: Room[]): Observable<Room[]> {
-    return this.http.post<Room[]>('rooms', hotel);
+  public store(rooms: Room[]): Observable<Room[]> {
+    return this.http.post<Room[]>('rooms', rooms);
   }
 
-  public update(hotel: Room[]): Observable<Room[]> {
-    return this.http.put<Room[]>('rooms', hotel);
+  public update(rooms: Room[]): Observable<Room[]> {
+    return this.http.put<Room[]>('rooms', rooms);
   }
 
-  public remove(hotel: Room): Observable<Room> {
-    return this.http.delete<Room>('rooms', { body: hotel });
+  public remove(rooms: Room[]): Observable<Room[]> {
+    return this.http.delete<Room[]>('rooms', { body: rooms });
   }
 }

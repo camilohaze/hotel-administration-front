@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, NgZone, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -26,10 +26,12 @@ export class LoginComponent {
     return this.$subscription;
   }
 
+  private ngZone: NgZone = inject(NgZone);
   private eventBusService: EventBusService = inject(EventBusService);
   private sessionService: SessionService = inject(SessionService);
   private modalService: ModalService = inject(ModalService);
-  private notificationService: NotificationService = inject(NotificationService);
+  private notificationService: NotificationService =
+    inject(NotificationService);
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
 
@@ -38,7 +40,7 @@ export class LoginComponent {
   constructor() {
     this.$subscriptions.push(
       this.eventBusService.on('login', (data: LoginRequest) =>
-        this.onSubmit(data)
+        this.ngZone.run(() => this.onSubmit(data))
       )
     );
   }

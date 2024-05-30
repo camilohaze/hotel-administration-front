@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, NgZone, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -37,6 +37,7 @@ export class EditDocumentTypeComponent implements OnInit {
 
   public documentType!: DocumentType;
 
+  private ngZone: NgZone = inject(NgZone);
   private modalService: ModalService = inject(ModalService);
   private notificationService: NotificationService =
     inject(NotificationService);
@@ -51,7 +52,7 @@ export class EditDocumentTypeComponent implements OnInit {
   ) {
     this.$subscriptions.push(
       this.eventBusService.on('edit-document-type', (documentType: DocumentType) => {
-        this.onSumbit(documentType);
+        this.ngZone.run(() => this.onSumbit(documentType));
       })
     );
   }
@@ -71,6 +72,10 @@ export class EditDocumentTypeComponent implements OnInit {
       error: () => this.modalService.close('spinner'),
       complete: () => this.modalService.close('spinner'),
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.$subscriptions.filter((p) => !p.closed).filter((p) => p.unsubscribe());
   }
 
   public onSumbit(documentType: DocumentType): void {

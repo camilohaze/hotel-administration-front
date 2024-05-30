@@ -56,6 +56,10 @@ export class NewCityComponent implements OnInit {
     // code here!
   }
 
+  public ngOnDestroy(): void {
+    this.$subscriptions.filter((p) => !p.closed).filter((p) => p.unsubscribe());
+  }
+
   public onSumbit(city: City): void {
     this.modalService.open(SpinnerComponent, {
       id: 'spinner',
